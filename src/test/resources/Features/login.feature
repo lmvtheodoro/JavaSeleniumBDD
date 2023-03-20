@@ -71,3 +71,12 @@ Feature: Login Functionality
   Scenario: System successfully remember users credentials
     Given user is at the Login Page
     Then the system remembers that user is still logged in
+
+  @ExpectedSuccessfullRequestLostPasswordFunction
+  Scenario: User successfully requests "forgot the password" functionality
+    Given user is at the Login Page
+    And user clicks on FORGOT YOUR PASSWORD button
+    Then user navigate to lost password page
+    And user insert valid credential: "Qa Tester Analyst Two"
+    And user clicks on GET NEW PASSWORD
+    Then the system displays a recover password message

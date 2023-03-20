@@ -96,6 +96,31 @@ public class LoginSteps {
         login.checkHomePage();
     }
 
+    @And("user clicks on FORGOT YOUR PASSWORD button")
+    public void userClicksOnFORGOTYOURPASSWORDButton() {
+        login.clickOnForgotPassword();
+    }
+
+    @And("user navigate to lost password page")
+    public void userCanObserveLostPasswordFields() {
+        login.userCanSeeLostPasswordFields();
+    }
+
+    @And("user insert valid credential: {string}")
+    public void userInsertValidCredential(String user) {
+        login.userInsertValidUserOnLostPasswordInput(user);
+    }
+
+    @And("user clicks on GET NEW PASSWORD")
+    public void userClicksOnGetNewPasswordButton() {
+        login.userClicksOnLostPasswordButton();
+    }
+
+    @Then("the system displays a recover password message")
+    public void theSystemDisplaysARecoverPasswordMessage() {
+        login.checkResetPasswordMessage();
+    }
+
     @After(order = 0)
     public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {

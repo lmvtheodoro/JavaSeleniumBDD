@@ -13,6 +13,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Set;
+
 //Selenium Behavior Driven-Development Example
 //Author: Lucas Magnani Vikar Theodoro
 public class LoginPage {
@@ -66,6 +68,18 @@ public class LoginPage {
     @FindBy(css = ".forminator-error-message")
     WebElement noPasswordInserted;
 
+    @FindBy(xpath = "/html/body/main/div/div[1]/div/div/section/div[2]/div/div[2]/div/div/div[2]/div/div/form/div[3]/div/div[2]/a")
+    WebElement forgotPassword;
+
+    @FindBy(xpath = "//*[@id=\"user_login\"]")
+    WebElement lostPasswordInputUser;
+
+    @FindBy(xpath = "//*[@id=\"wp-submit\"]")
+    WebElement requestNewPasswordButton;
+
+    @FindBy(xpath = "//*[@id=\"login-message\"]")
+    WebElement passwordResetConfirmationMessage;
+
     /* Background Methods */
     public void userOpenLoginScreen(){
         driver.get("https://osagilistas.com/login/");
@@ -96,6 +110,10 @@ public class LoginPage {
         wait.until(ExpectedConditions.visibilityOf(rememberMeMessage));
         String expected = "Você já está logado.";
         Assert.assertEquals(expected, rememberMeMessage.getText());
+    }
+    public void clickOnForgotPassword(){
+        wait.until(ExpectedConditions.visibilityOf(forgotPassword));
+        forgotPassword.click();
     }
     public void clickOnLogOut(){
         wait.until(ExpectedConditions.visibilityOf(logoutButton));
@@ -128,10 +146,34 @@ public class LoginPage {
         String expected = "sua senha é necessária";
         Assert.assertEquals(expected, noPasswordInserted.getText());
     }
+    public void checkResetPasswordMessage(){
+        wait.until(ExpectedConditions.visibilityOf(passwordResetConfirmationMessage));
+        String expected = " Verifique no seu e-mail o link de confirmação, então visite a página de acesso";
+        Assert.assertEquals(expected, passwordResetConfirmationMessage.getText());
+    }
     public void mouseHoverOnProfile(){
         Actions actions = new Actions(driver);
         wait.until(ExpectedConditions.visibilityOf(profileIcon));
         actions.moveToElement(profileIcon).perform();
+    }
+    public void userCanSeeLostPasswordFields(){
+        String actualWindow = driver.getWindowHandle();
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+        Set<String> windows = driver.getWindowHandles();
+        for (String window : windows) {
+            if (!window.equals(actualWindow)) {
+                driver.switchTo().window(window);
+                break;
+            }
+        }
+        wait.until(ExpectedConditions.visibilityOf(lostPasswordInputUser));
+        wait.until(ExpectedConditions.visibilityOf(requestNewPasswordButton));
+    }
+    public void userInsertValidUserOnLostPasswordInput(String user){
+        lostPasswordInputUser.sendKeys(user);
+    }
+    public void userClicksOnLostPasswordButton(){
+        requestNewPasswordButton.click();
     }
     public void closeBrowser(){
         driver.quit();
