@@ -148,7 +148,7 @@ public class LoginPage {
     }
     public void checkResetPasswordMessage(){
         wait.until(ExpectedConditions.visibilityOf(passwordResetConfirmationMessage));
-        String expected = " Verifique no seu e-mail o link de confirmação, então visite a página de acesso";
+        String expected = "Verifique no seu e-mail o link de confirmação, então visite a página de acesso.";
         Assert.assertEquals(expected, passwordResetConfirmationMessage.getText());
     }
     public void mouseHoverOnProfile(){
