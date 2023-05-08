@@ -29,6 +29,7 @@ public class LoginPage {
         WebDriverManager.edgedriver().setup();
         EdgeOptions options = new EdgeOptions();
         options.addArguments("--start-maximized");
+        options.addArguments("--remote-allow-origins=*");
         driver = new EdgeDriver(options);
         wait = new WebDriverWait(driver, Utils.getMaxWaitTime());
         PageFactory.initElements(driver, this);
